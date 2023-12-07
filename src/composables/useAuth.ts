@@ -41,5 +41,10 @@ export const useAuthentication = () => {
     return token
   }
 
-  return { loading, loginUser }
+  const logout = () => {
+    sessionStorage.removeItem('accessToken')
+    router.push('/')
+  }
+
+  return { loading, loginUser, logout }
 }
