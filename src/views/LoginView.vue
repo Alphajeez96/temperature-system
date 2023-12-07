@@ -34,7 +34,10 @@
 
         <a href="#">Forgot Password?</a>
 
-        <button :disabled="v$.$invalid">Login</button>
+        <button :disabled="v$.$invalid || loading">
+          <img v-if="loading" src="@/assets/images/button-loader.svg" alt="loader" />
+          <span v-else> Login </span>
+        </button>
       </form>
     </div>
   </div>
@@ -42,13 +45,12 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
+import { type AuthPayload } from '@/types/authInterface'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
+import { useAuthentication } from '@/composables/useAuth'
 
-interface AuthPayload {
-  email: string
-  password: string
-}
+const { loginUser, loading } = useAuthentication()
 
 const isPassword: Ref<boolean> = ref(true)
 const payload: Ref<AuthPayload> = ref({
@@ -67,7 +69,7 @@ const handleLogin = async () => {
   const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) return
 
-  // loginUser(payload.value)
+  loginUser(payload.value)
 }
 </script>
 
@@ -99,7 +101,7 @@ const handleLogin = async () => {
     }
 
     button {
-      @apply mt-6 h-14 bg-[#6877D5] rounded-[4px] text-base md:text-xl text-primary-white w-full p-4 focus:outline-none;
+      @apply mt-6 h-14 bg-[#6877D5] rounded-[4px] text-base md:text-xl text-primary-white w-full p-4 focus:outline-none flex justify-center;
 
       &:disabled {
         @apply cursor-not-allowed opacity-50;
