@@ -1,0 +1,21 @@
+.el-notification {
+  .el-notification__group {
+    margin-left: 1rem;
+  }
+
+  &.success {
+    @apply bg-green-100 border-2 border-primary-green;
+
+    .el-notification__title {
+      @apply text-green-800 font-semibold text-base;
+    }
+  }
+
+  &.error {
+    @apply bg-red-100 border border-primary-red;
+
+    .el-notification__title {
+      @apply text-red-800 font-semibold text-base;
+    }
+  }
+}

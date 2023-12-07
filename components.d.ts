@@ -11,5 +11,7 @@ declare module 'vue' {
     EyeSlash: typeof import('./src/components/Icons/EyeSlash.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ToastError: typeof import('./src/components/Icons/ToastError.vue')['default']
+    ToastSuccess: typeof import('./src/components/Icons/ToastSuccess.vue')['default']
   }
 }

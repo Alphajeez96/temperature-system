@@ -1,10 +1,10 @@
 import { ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { type AuthPayload } from '@/types/authInterface'
+import $toast from '@/plugins/notificationToast'
 
 export const useAuthentication = () => {
   const router = useRouter()
-
   const loading: Ref<boolean> = ref(false)
 
   const loginUser = async (payload: AuthPayload) => {
@@ -25,7 +25,7 @@ export const useAuthentication = () => {
 
       router.push('/dashboard')
     } catch (error) {
-      console.error(error)
+      $toast.error(error as string)
     } finally {
       loading.value = false
     }
@@ -41,8 +41,5 @@ export const useAuthentication = () => {
     return token
   }
 
-  return {
-    loading,
-    loginUser
-  }
+  return { loading, loginUser }
 }

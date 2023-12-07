@@ -7,7 +7,8 @@ export default {
         primary: {
           black: '#242730',
           white: '#fcfcfc',
-          red: '#F5425F'
+          red: '#F5425F',
+          green: '#47B3A2'
         }
       },
 
