@@ -6,16 +6,22 @@
         <p class="pt-2 text-base md:text-lg">Nice to see you again! Log In with your details.</p>
       </div>
 
-      <form class="mt-10">
+      <form class="mt-10" @submit.prevent="handleLogin">
         <!-- Email Here -->
         <div class="form-group">
-          <input type="email" placeholder="Email Address" v-model="payload.email" />
+          <input
+            type="email"
+            :class="{ invalid: v$.email.$error }"
+            placeholder="Email Address"
+            v-model="payload.email"
+          />
         </div>
 
         <!-- Password Here -->
         <div class="form-group">
           <input
             :type="isPassword ? 'password' : 'text'"
+            :class="{ invalid: v$.password.$error }"
             placeholder="Password"
             v-model="payload.password"
           />
@@ -28,7 +34,7 @@
 
         <a href="#">Forgot Password?</a>
 
-        <button>Login</button>
+        <button :disabled="v$.$invalid">Login</button>
       </form>
     </div>
   </div>
@@ -36,6 +42,8 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required, email } from '@vuelidate/validators'
 
 interface AuthPayload {
   email: string
@@ -44,9 +52,23 @@ interface AuthPayload {
 
 const isPassword: Ref<boolean> = ref(true)
 const payload: Ref<AuthPayload> = ref({
-  email: '',
-  password: ''
+  email: 'prince@amini.ai',
+  password: 'password@123'
 })
+
+const validations = {
+  email: { required, email },
+  password: { required }
+}
+
+const v$ = useVuelidate(validations, payload.value)
+
+const handleLogin = async () => {
+  const isFormCorrect = await v$.value.$validate()
+  if (!isFormCorrect) return
+
+  // loginUser(payload.value)
+}
 </script>
 
 <style scoped lang="scss">
@@ -62,6 +84,10 @@ const payload: Ref<AuthPayload> = ref({
         @apply rounded-[4px] w-full h-14 p-4 focus:outline-none text-sm md:text-base text-primary-white transition-all duration-500;
         background: rgba(255, 255, 255, 0.1);
 
+        &.invalid {
+          @apply border-2 border-primary-red;
+        }
+
         &:focus {
           outline: none;
         }
@@ -74,6 +100,10 @@ const payload: Ref<AuthPayload> = ref({
 
     button {
       @apply mt-6 h-14 bg-[#6877D5] rounded-[4px] text-base md:text-xl text-primary-white w-full p-4 focus:outline-none;
+
+      &:disabled {
+        @apply cursor-not-allowed opacity-50;
+      }
     }
   }
 }
