@@ -14,7 +14,16 @@
 
         <!-- Password Here -->
         <div class="form-group">
-          <input type="password" placeholder="Password" v-model="payload.password" />
+          <input
+            :type="isPassword ? 'password' : 'text'"
+            placeholder="Password"
+            v-model="payload.password"
+          />
+
+          <span class="absolute top-4 right-4" @click="isPassword = !isPassword">
+            <Eye v-if="isPassword" />
+            <EyeSlash v-else />
+          </span>
         </div>
 
         <a href="#">Forgot Password?</a>
@@ -33,6 +42,7 @@ interface AuthPayload {
   password: string
 }
 
+const isPassword: Ref<boolean> = ref(true)
 const payload: Ref<AuthPayload> = ref({
   email: '',
   password: ''
@@ -49,8 +59,12 @@ const payload: Ref<AuthPayload> = ref({
       @apply mb-3 relative;
 
       input {
-        @apply rounded-[4px] w-full h-14 p-4 focus:outline-none text-sm md:text-base text-primary-white;
+        @apply rounded-[4px] w-full h-14 p-4 focus:outline-none text-sm md:text-base text-primary-white transition-all duration-500;
         background: rgba(255, 255, 255, 0.1);
+
+        &:focus {
+          outline: none;
+        }
       }
     }
 
