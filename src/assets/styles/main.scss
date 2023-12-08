@@ -7,3 +7,38 @@ body {
   @apply scroll-smooth overflow-hidden;
   font-family: 'Lato', sans-serif;
 }
+
+button {
+  &:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+}
+input {
+  @apply rounded-[4px] w-full h-14 p-4 focus:outline-none text-sm md:text-base text-primary-white transition-all duration-500;
+  background: rgba(255, 255, 255, 0.1);
+
+  &.invalid {
+    @apply border-2 border-primary-red;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.el-select--large {
+  margin: unset;
+  width: 100%;
+}
+
+.el-select-dropdown__item {
+  height: 42px !important;
+}
+
+.el-input__wrapper {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.el-input__inner {
+  color: #fcfcfc !important;
+}

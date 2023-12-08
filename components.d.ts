@@ -7,10 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElOption: typeof import('element-plus/es')['ElOption']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     Eye: typeof import('./src/components/Icons/Eye.vue')['default']
     EyeSlash: typeof import('./src/components/Icons/EyeSlash.vue')['default']
+    Logout: typeof import('./src/components/Icons/Logout.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SideBar: typeof import('./src/components/widgets/SideBar.vue')['default']
     ToastError: typeof import('./src/components/Icons/ToastError.vue')['default']
     ToastSuccess: typeof import('./src/components/Icons/ToastSuccess.vue')['default']
   }

@@ -10,6 +10,7 @@
         <!-- Email Here -->
         <div class="form-group">
           <input
+            id="email"
             type="email"
             :class="{ invalid: v$.email.$error }"
             placeholder="Email Address"
@@ -20,6 +21,7 @@
         <!-- Password Here -->
         <div class="form-group">
           <input
+            id="password"
             :type="isPassword ? 'password' : 'text'"
             :class="{ invalid: v$.password.$error }"
             placeholder="Password"
@@ -45,9 +47,9 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
-import { type AuthPayload } from '@/types/authInterface'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
+import { type AuthPayload } from '@/types/authInterface'
 import { useAuthentication } from '@/composables/useAuth'
 
 const { loginUser, loading } = useAuthentication()
@@ -81,19 +83,6 @@ const handleLogin = async () => {
 
     .form-group {
       @apply mb-3 relative;
-
-      input {
-        @apply rounded-[4px] w-full h-14 p-4 focus:outline-none text-sm md:text-base text-primary-white transition-all duration-500;
-        background: rgba(255, 255, 255, 0.1);
-
-        &.invalid {
-          @apply border-2 border-primary-red;
-        }
-
-        &:focus {
-          outline: none;
-        }
-      }
     }
 
     a {
@@ -102,10 +91,6 @@ const handleLogin = async () => {
 
     button {
       @apply mt-6 h-14 bg-[#6877D5] rounded-[4px] text-base md:text-xl text-primary-white w-full p-4 focus:outline-none flex justify-center;
-
-      &:disabled {
-        @apply cursor-not-allowed opacity-50;
-      }
     }
   }
 }
