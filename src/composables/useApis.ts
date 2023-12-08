@@ -4,26 +4,19 @@ import $toast from '@/plugins/notificationToast'
 export const useApis = () => {
   const loading: Ref<boolean> = ref(false)
 
-  const fetchWeatherData = async (lat: number, lon: number): Promise<any> => {
+  const fetchWeatherData = async (lat: number, lon: number) => {
     try {
       loading.value = true
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=c8de53bec21fd6904f961b4f2759445a&units=metric`
 
-      return new Promise((resolve, reject) => {
-        fetch(apiUrl)
-          .then(async (response) => {
-            const data = await response.json()
-            resolve(data)
+      const response = await fetch(apiUrl)
+      const data = await response.json()
 
-            if (data.cod === '400') {
-              $toast.error(data.message)
-            }
-          })
-          .catch((error) => {
-            $toast.error(error.message)
-            reject(error)
-          })
-      })
+      if (data.cod === '400') {
+        $toast.error(data.message)
+      }
+
+      return data
     } finally {
       loading.value = false
     }

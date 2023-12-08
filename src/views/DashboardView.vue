@@ -4,7 +4,8 @@
       <SideBar :loading="loading" :data="locationData" @fetch-data="fetchData" />
     </aside>
 
-    <div id="map"></div>
+    <Loader v-if="loading" />
+    <div v-else id="map"></div>
   </section>
 </template>
 
@@ -17,6 +18,7 @@ import { type LocationData } from '@/types/authInterface'
 import { getLocalTimeFromWeatherData } from '@/lib/utils'
 import L from 'leaflet'
 import layers from '@/lib/mapLayers'
+import Loader from '@/widgets/Loader.vue'
 import SideBar from '@/widgets/SideBar.vue'
 
 const { loading, fetchWeatherData, getUserLocation } = useApis()
